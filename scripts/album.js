@@ -87,10 +87,19 @@ var albumPicasso = {
  var findParentByClassName = function(element, targetClass) {
      if (element) {
          var currentParent = element.parentElement;
-         while (currentParent.className !== targetClass && currentParent.className !== null) {
+
+         if(currentParent == null) {
+             console.log("No parent found");
+         }
+
+
+         while (currentParent.className !== targetClass && currentParent.className == null) {
              currentParent = currentParent.parentElement;
          }
-         return currentParent;
+         if (currentParent == null || currentParent.className != targetClass){
+             console.log("No parent found with that class name");
+         }
+
      }
  };
 
@@ -146,21 +155,24 @@ var albumPicasso = {
      setCurrentAlbum(albumPicasso);
 
      songListContainer.addEventListener('mouseover', function(event) {
-         if (event.target.parentElement.className === 'album-view-song-item') {
+
+        if (event.target.parentElement.className === 'album-view-song-item') {
              var songItem = getSongItem(event.target);
 
-            if (songItem.getAttribute('data-song-number') !== currentlyPlayingSong) {
-                songItem.innerHTML = playButtonTemplate;
+        if (songItem.getAttribute('data-song-number') !== currentlyPlayingSong) {
+            songItem.innerHTML = playButtonTemplate;
+
             }
          }
      });
 
      for (var i = 0; i < songRows.length; i++) {
          songRows[i].addEventListener('mouseleave', function(event) {
+
              var songItem = getSongItem(event.target);
              var songItemNumber = songItem.getAttribute('data-song-number');
 
-             // #2
+
              if (songItemNumber !== currentlyPlayingSong) {
                  songItem.innerHTML = songItemNumber;
              }
@@ -170,6 +182,8 @@ var albumPicasso = {
              clickHandler(event.target);
          });
      }
+ };
+
 
      var albums = [albumPicasso, albumMarconi, albumMillennial];
      var index = 1;
@@ -180,4 +194,3 @@ var albumPicasso = {
             index = 0;
         }
     });
- };
