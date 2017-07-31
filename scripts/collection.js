@@ -19,10 +19,9 @@ var buildCollectionItemTemplate = function() {
    };
 
    $(window).load(function() {
+       var $collectionContainer = $('.album-covers');
 
-        var $collectionContainer = $('.album-covers');
-
-        $collectionContain.empty();
+        $collectionContainer.empty();
 
         for (var i = 0; i < 12; i++) {
 
@@ -30,5 +29,5 @@ var buildCollectionItemTemplate = function() {
 
             $collectionContainer.append($newThumbnail);
 
-
+        }
     });
