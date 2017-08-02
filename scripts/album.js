@@ -1,4 +1,11 @@
+var setSong = function(songNumber) {
+    currentlyPlayingSongNumber = parseInt(songNumber);
+    currentSongFromAlbum = currentAlbum.songs[songNumber -1];
+};
 
+var getSongNumberCell = function(number) {
+    return $('.song-item-number[data-song-number="' + number + '"]');
+};
 
   var createSongRow = function(songNumber, songName, songLength) {
       var template =
@@ -17,15 +24,14 @@
 
      if (currentlyPlayingSongNumber !== null) {
 
-         var currentlyPlayingCell = $('.song-item-number[data-song-number="' + currentlyPlayingSong + '"]');
-          currentlyPlayingCell.html(currentlyPlayingSong);
+         var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
+          currentlyPlayingCell.html(currentlyPlayingSongNumber);
      }
 
      if (currentlyPlayingSongNumber !== songNumber) {
 
          $(this).html(pauseButtonTemplate);
-         currentlyPlayingSong = songNumber;
-         currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+         setSong(songNumber);
          updatePlayerBarSong();
 
      } else if (currentlyPlayingSongNumber === songNumber) {
@@ -135,8 +141,8 @@ var previousSong = function() {
 
     $('.main-controls .play-pause').html(playerBarPauseButton);
 
-    var $previousSongNumberCell = $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]');
-    var $lastSongNumberCell = $('.song-item-number[data-song-number="' + lastSongNumber + '"]');
+    var $previousSongNumberCell = getSongNumberCell(setSong);
+    var $lastSongNumberCell = getSongNumberCell(lastSongNumber); 
 
     $previousSongNumberCell.html(pauseButtonTemplate);
     $lastSongNumberCell.html(lastSongNumber);
@@ -158,8 +164,8 @@ var updatePlayerBarSong = function() {
  var playerBarPauseButton = '<span class="ion-pause"></span>';
 
  //Store state of playing songs
- var currentlyPlayingSongNumber = null;
  var currentAlbum = null;
+ var currentlyPlayingSongNumber = null;
  var currentSongFromAlbum = null;
 
  var $previousButton = $('.main-controls .previous');
